@@ -10,43 +10,62 @@ var global = window || GLOBAL;
 global.bruhdash = {
 
   // returns the first element of an array
-  first: function () {
-      
+  first: function (array) {
+    return array[0];
   },
 
   // returns the last element of an array
-  last: function () {
-
+  last: function (array) {
+    let end = array.length;
+    return array[end-1];
   },
 
   // returns the index of the first matching element from left to right
-  indexOf: function () {
-
+  indexOf: function (arr, val) {
+    for(i=0; i<arr.length; i++){
+      if(arr[i] === val){
+        return i;
+      }
+    }
+    return -1;
   },
 
   // returns the index of the first matching element from right to left
-  lastIndexOf: function () {
-
+  lastIndexOf: function (arr, val) {
+    for(i=arr.length; i>0; i--){
+      if(arr[i] === val){
+        return i;
+      }
+    }
+    return -1;
   },
 
   // returns an array with all elements except for the last element
-  initial: function () {
-
+  initial: function (arr) {
+    let answer = arr;
+    arr.pop();
+    return answer;
   },
   
   // returns an array with all falsey values removed
-  compact: function() {
-
+  compact: function(arr) {
+    let answer = [];
+    for(i=0; i<arr.length; i++){
+      if(arr[i]){
+        answer.push(arr[i]);
+      }
+    }
+    return answer;
   },
 
   // creates a slice of an array from the start index up to but not including the end index
-  slice: function () {
-
+  slice: function (array, val1, val2) {
+    return array.slice(val1,val2);
   },
 
   // returns a slice of array with n elements dropped from the beignning
-  drop: function(){
-
+  drop: function(array){
+    return array.shift();
   },
 
   // returns a slice of array with n elements dropped from the end
@@ -66,13 +85,28 @@ global.bruhdash = {
 
   // fills elements of array with specified value from the start index
   // up to but not including the end index
-  fill: function() {
-
+  fill: function(arr, val, start, end) {  
+    if(start && end){
+      for(let i=start; i<end; i++){
+        arr[i] = val;
+      }
+    }else{
+      for (let i=0; i<arr.length; i++){
+        arr[i] = val;
+      }
+    }
+    return arr;
   },
 
   // removes all given values from an array
-  pull: function () {
-
+  pull: function (arr, val) {
+    let answer = [];
+    for(i=0; i<arr.length; i++){
+      if(arr[i] !== val){
+        answer.push(arr[i]);
+      }
+    }
+    return answer;
   },
 
   // removes elements of an array corresponding to the given indices
@@ -111,8 +145,17 @@ global.bruhdash = {
 
   // iterates over elements of a collection and invokes iteratee for each element
   // Note: this should work for arrays and objects
-  forEach: function() {
+  forEach: function(collection, func) { // collection covers arrays and objects
+    for(let key in collection){ // for each key in that collection
+      func(collection[key]);
+    }
 
+    // answer for cycling function through array elements
+    /*
+    for(let i=0; i<arr.length; i++){
+      func(arr[i]);
+    }
+    */
   },
 
   // creates an array of values by running each element in collection thru the iteratee
