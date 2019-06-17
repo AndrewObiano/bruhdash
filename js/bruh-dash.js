@@ -64,23 +64,65 @@ global.bruhdash = {
   },
 
   // returns a slice of array with n elements dropped from the beignning
-  drop: function(array){
-    return array.shift();
+  drop: function(array, number){
+    if(number === 0){
+      return array;
+    }else if(number === undefined){
+      array.shift();
+      return array;
+    }else{
+      for(i=0; i<number; i++){
+        array.shift();
+      }
+      return array;
+    }
   },
 
   // returns a slice of array with n elements dropped from the end
-  dropRight: function() {
-
+  dropRight: function(array, number) {
+    if(number === 0){
+      return array;
+    }else if(number === undefined){
+      array.pop();
+      return array;
+    }else{
+      for(i=0; i<number; i++){
+        array.pop();
+      }
+      return array;
+    }
   },
 
   // creates a slice of an array with n elements taken from the beginning
-  take: function () {
-
+  take: function (array, number) {
+    if(number === 0){
+      let emptyArr = [];
+      return emptyArr;
+    }else if(number > array.length){
+      return array;
+    }else if(number === undefined){
+      let tempArr = [];
+      tempArr.push(array[0]);
+      return tempArr;
+    }else{
+      return array.slice(0, number);
+    }
   },
 
   // creates a slice of an array with n elements taken from the end
-  takeRight: function () {
-
+  takeRight: function (array, number) {
+    if(number === 0){
+      let emptyArr = [];
+      return emptyArr;
+    }else if(number > array.length){
+      return array;
+    }else if(number === undefined){
+      let tempArr = [];
+      tempArr.push(array[array.length-1]);
+      return tempArr;
+    }else{
+      return array.slice(array.length-number, array.length);
+    }
   },
 
   // fills elements of array with specified value from the start index
@@ -99,19 +141,25 @@ global.bruhdash = {
   },
 
   // removes all given values from an array
-  pull: function (arr, val) {
+  pull: function (array, val1, val2) {
     let answer = [];
-    for(i=0; i<arr.length; i++){
-      if(arr[i] !== val){
-        answer.push(arr[i]);
+    for(i=0; i<array.length; i++){
+      if(array[i] !== val1 && array[i] !== val2){
+        answer.push(array[i]);
       }
     }
     return answer;
   },
 
   // removes elements of an array corresponding to the given indices
-  pullAt: function () {
-
+  pullAt: function (array, arrIndices) {
+    let answer = [];
+    for(i=0; i<array.length; i++){
+      if(array.length === arrIndices[i]){ //IM STUCK HERE
+        answer.push(array[i]);
+      }
+    }
+    return answer;
   },
 
   // creates an array excluding all the specified values
@@ -147,7 +195,7 @@ global.bruhdash = {
   // Note: this should work for arrays and objects
   forEach: function(collection, func) { // collection covers arrays and objects
     for(let key in collection){ // for each key in that collection
-      func(collection[key]);
+      func(collection[key]); // invoke that function for each key in that collection
     }
 
     // answer for cycling function through array elements
