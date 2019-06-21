@@ -219,14 +219,22 @@ global.bruhdash = {
   // creates an array of elements into groups of length of specified size
   chunk: function(array, val){ // IM STUCK
     let emptyArr = [];
-    if(val === 0){
-      return emptyArr;
-    }else if(val === array.length || val >= array.length){
+    if(array.length === 0){
+      return emptyArr = [];
+    }else if(val >= array.length){
       emptyArr.push(array);
       return emptyArr;
-    }else if(array && val){
-      
+    }else if(val === 0){
+      return emptyArr;
     }else{
+      for(i=0; i<array.length/val; i++){
+        if(array.length > 1){
+          emptyArr.push(array.splice(0, val));
+        }
+        if(array.length === 1){
+            emptyArr.push(array.splice(0,1));
+        }
+      }
       return emptyArr;
     }
   },
@@ -262,14 +270,24 @@ global.bruhdash = {
 
   // iterates over elements of a collection and returns all elements that the predicate returns truthy for
   // Note: this should work for arrays and objects
-  filter: function() {
-
+  filter: function(collection, func) {
+    let emptyArr = [];
+    for(let key in collection){
+      if(func(collection[key])){
+        emptyArr.push(collection[key]);
+      }
+    }
+    return emptyArr;
   },
 
   // Reduces the collection to a value which is the accumulated result of running each element
   // in the collection through an iteratee
   // Note: this should work for arrays and objects
-  reduce: function() {
-    
+  reduce: function(collection, func) {
+    let answer = 0;
+    for(let key in collection){
+      answer = func(answer, collection[key]);
+    }
+    return answer;
   }
 };
